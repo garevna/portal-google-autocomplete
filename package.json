@@ -1,6 +1,6 @@
 {
   "name": "portal-google-autocomplete",
-  "version": "1.0.74",
+  "version": "1.0.8",
   "private": false,
   "license": "MIT",
   "description": "For DGtek portal only. This package uses Google autocomplete and geolocation to check the address to be in the footprint (DGtek buildings and polygons).",

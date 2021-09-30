@@ -17,18 +17,30 @@ customElements.define('portal-google-autocomplete', PortalGoogleAutocomplete)
 ### Set API host
 
 ```html
-<portal-google-autocomplete host="https://dgtek-staging.herokuapp.com" />
+<portal-google-autocomplete host="https://example.com/api" />
 ```
 
-You should wait for Google maps script has been loaded in your component
+The package does not load Google maps API.
+
+The Google maps script is expected to be loaded by your application.
+
+You should wait for Google maps script has been loaded before you start to use the package:
 
 ##### data
 
 ```js
-data: () => ({
-  mapIsReady: false,
-  /* ... other variables here */
-})
+mapIsReady: false
+```
+
+##### mounted hook
+
+```js
+function waitForGoogleMapsScript () {
+  if (!window.google) window.requestAnimationFrame(waitForGoogleMapsScript.bind(this))
+  else this.mapIsReady = true
+}
+
+window.requestAnimationFrame(waitForGoogleMapsScript.bind(this))
 ```
 
 ##### Catch events
@@ -53,13 +65,6 @@ window.addEventListener('server-error', function (event) {
 ##### mounted hook
 
 ```js
-function waitForGoogleMapsScript () {
-  if (!window.google) window.requestAnimationFrame(waitForGoogleMapsScript.bind(this))
-  else this.mapIsReady = true
-}
-
-window.requestAnimationFrame(waitForGoogleMapsScript.bind(this))
-
 window.addEventListener('new-address-data', this.catchEvent)
 ```
 
@@ -67,10 +72,4 @@ window.addEventListener('new-address-data', this.catchEvent)
 
 ```js
 window.removeEventListener('new-address-data', this.catchEvent)
-```
-
-And then insert this package to your component template:
-
-```html
-<DgtekGoogleAutocomplete v-if="mapIsReady" />
 ```

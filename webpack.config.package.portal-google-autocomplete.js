@@ -1,5 +1,4 @@
 const path = require('path')
-// const webpack = require('webpack')
 
 module.exports = {
   entry: './src/portal-google-autocomplete.js',
@@ -11,16 +10,4 @@ module.exports = {
       type: 'umd'
     }
   }
-  // module: {
-  //   rules: [
-  //     {
-  //       test: /\.(png|jpe?g|gif)$/i,
-  //       use: [
-  //         {
-  //           loader: 'file-loader',
-  //         },
-  //       ],
-  //     },
-  //   ],
-  // }
 }
