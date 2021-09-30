@@ -9,6 +9,10 @@ export const createAutocomplete = async function (inputElement) {
     const place = autocomplete.getPlace()
 
     window[Symbol.for('global.addressData')].url = place.url
+    window[Symbol.for('address-on-map-link')].style.display = place.url ? 'block' : 'none'
+    window[Symbol.for('address-on-map-link')].onclick = function (event) {
+      window.open(window[Symbol.for('global.addressData')].url, '_blank')
+    }
 
     const { lat, lng } = { lat: place.geometry.location.lat(), lng: place.geometry.location.lng() }
 
@@ -20,8 +24,6 @@ export const createAutocomplete = async function (inputElement) {
       administrative_area_level_1: state,
       postal_code: postCode
     } = Object.assign({}, ...place.address_components.map(item => ({ [item.types[0]]: item.short_name })))
-
-    // const geoscapeStreetType = streetTypes.getGeoscapeStreetType(fullStreetName)
 
     const tmp = fullStreetName.toUpperCase().split(' ')
     const googleStreetType = tmp.pop()

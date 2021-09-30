@@ -1,31 +1,27 @@
-import { createAutocomplete } from './createAutocomplete'
 import { loadGoogleMapsScript } from './loadGoogleMapsScript'
 
-import { getBuildings } from './getBuildings'
-
-import { clearAddressData } from './clearAddressData'
-
-import { getGeoscapeVariants } from './getGeoscapeVariants'
-import { getGeoscapeCoordinates } from './getGeoscapeCoordinates'
-
-import { testAddressStatus } from './testAddressStatus'
-import { searchAddressInDB } from './searchAddressInDB'
+import { createInput } from './createInput'
+import { createAutocomplete } from './createAutocomplete'
 
 import { normalizeAddress } from './normalizeAddress'
+import { clearAddressData } from './clearAddressData'
+
+import { searchBuildingByAddress } from './searchBuildingByAddress'
+import { searchInPolygons } from './searchInPolygons'
+
+import { emitEvent } from './emitEvent'
 
 export {
   loadGoogleMapsScript,
   createAutocomplete,
 
-  getBuildings,
-
   clearAddressData,
+  normalizeAddress,
 
-  getGeoscapeVariants,
-  getGeoscapeCoordinates,
+  createInput,
 
-  testAddressStatus,
-  searchAddressInDB,
+  searchBuildingByAddress,
+  searchInPolygons,
 
-  normalizeAddress
+  emitEvent
 }

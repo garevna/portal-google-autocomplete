@@ -1,42 +1,23 @@
-# dgtek-google-autocomplete
-
-###### Vue, Vuetify
+# portal-google-autocomplete
 
 ### Package installation
 
 ```
-yarn add dgtek-google-autocomplete && rm -r node_modules/dgtek-google-autocomplete/dist/node_modules
-```
-
-##### package.json for auto-depoy (CI/CD):
-
-for vue-cli:
-
-```
-"scripts": {
-  ...
-  "serve": "yarn add dgtek-google-autocomplete && rm -r node_modules/dgtek-google-autocomplete/node_modules && vue-cli-service serve",
-  "build": "yarn add dgtek-google-autocomplete && rm -r node_modules/dgtek-google-autocomplete/node_modules && vue-cli-service build",
-  ...
-}
+yarn add portal-google-autocomplete
 ```
 
 ### Start package
 
 ```js
-import 'dgtek-google-autocomplete/dist/dgtek-google-autocomplete.css'
-/* ... other imports here */
-const { DgtekGoogleAutocomplete } = require('dgtek-google-autocomplete').default
+import PortalGoogleAutocomplete from 'portal-google-autocomplete'
+
+customElements.define('portal-google-autocomplete', PortalGoogleAutocomplete)
 ```
 
 ### Set API host
 
-```js
-window.dispatchEvent(new CustomEvent('set-api-host', {
-  detail: {
-    host: 'https://example.com' /* API host url must be here */
-  }
-}))
+```html
+<portal-google-autocomplete host="https://dgtek-staging.herokuapp.com" />
 ```
 
 You should wait for Google maps script has been loaded in your component
@@ -50,45 +31,42 @@ data: () => ({
 })
 ```
 
-##### Catch event
+##### Catch events
 
-You can change the name of this method (`catchEvent`) to your own
+Submit button event:
 
 ```js
-methods: {
-  /* your own methods here */,
-  catchEvent () {
-    const { address, addressComponents, status, url, coordinates, buildingId, error } = event.detail
-    ... /* your code will be here */
-  }
-}
+window.addEventListener('new-address-data', function (event) {
+  console.log(event.detail) /* replace this with your code */
+})
 ```
-<sup>During checking the address, a number of requests will be made to remote server.</sup><br>
-<sup>Every request can fail.</sup><br>
-<sup>`error` field value should be `null` otherwise this field contains error message</sup>
+During checking the address, a number of requests will be made to remote server.
+
+Every request can fail.
+
+```js
+window.addEventListener('server-error', function (event) {
+  console.log(event.detail) /* { error: true, errorType: String, errorMessage: String } */
+})
+```
 
 ##### mounted hook
 
 ```js
-mounted () {
-  function waitForGoogleMapsScript () {
-    if (!window.google) window.requestAnimationFrame(waitForGoogleMapsScript.bind(this))
-    else this.mapIsReady = true
-  }
-
-  window.requestAnimationFrame(waitForGoogleMapsScript.bind(this))
-
-  window.addEventListener('new-address-data', this.catchEvent)
+function waitForGoogleMapsScript () {
+  if (!window.google) window.requestAnimationFrame(waitForGoogleMapsScript.bind(this))
+  else this.mapIsReady = true
 }
+
+window.requestAnimationFrame(waitForGoogleMapsScript.bind(this))
+
+window.addEventListener('new-address-data', this.catchEvent)
 ```
 
 ##### beforeDestroy hook
 
 ```js
-beforeDestroy () {
-  ...
-  window.removeEventListener('new-address-data', this.catchEvent)
-}
+window.removeEventListener('new-address-data', this.catchEvent)
 ```
 
 And then insert this package to your component template:
