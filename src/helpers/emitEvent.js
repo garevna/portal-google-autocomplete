@@ -1,4 +1,4 @@
 export const emitEvent = function (eventName, eventData) {
-  const event = new CustomEvent(eventName, { detail: eventData })
+  const event = new window.CustomEvent(eventName, { detail: eventData })
   window.dispatchEvent(event)
 }

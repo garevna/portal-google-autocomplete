@@ -1,6 +1,6 @@
 {
   "name": "portal-google-autocomplete",
-  "version": "1.0.8",
+  "version": "1.0.85",
   "private": false,
   "license": "MIT",
   "description": "For DGtek portal only. This package uses Google autocomplete and geolocation to check the address to be in the footprint (DGtek buildings and polygons).",
@@ -10,8 +10,8 @@
     "url": "git+https://github.com/garevna/portal-google-autocomplete-package.git"
   },
   "scripts": {
-    "dev": "webpack --mode development -w",
-    "prod": "webpack --mode production",
+    "serve": "webpack --mode development -w",
+    "build": "webpack --mode production",
     "package-dev": "webpack --config webpack.config.package.portal-google-autocomplete.js --mode development -w",
     "package": "webpack --config webpack.config.package.portal-google-autocomplete.js --mode production"
   },
@@ -23,7 +23,8 @@
   "main": "./dist/portal-google-autocomplete.js",
   "dependencies": {
     "core-js": "^3.6.5",
-    "dgtek-styles": "^0.0.8"
+    "dgtek-styles": "^0.0.8",
+    "eslint-config-standard": "^16.0.3"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",

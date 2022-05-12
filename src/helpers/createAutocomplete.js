@@ -45,7 +45,8 @@ export const createAutocomplete = async function (inputElement) {
     window[Symbol.for('global.addressData')].address = `${number} ${details.street} ${details.streetType}, ${city.toUpperCase()} ${state} ${postCode}`
     window[Symbol.for('global.addressData')].coordinates = { lat, lng }
 
-    inputElement.value = place.formatted_address
+    // inputElement.value = place.formatted_address
+    inputElement.value = window[Symbol.for('global.addressData')].address
   })
 
   return autocomplete

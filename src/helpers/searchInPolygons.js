@@ -6,7 +6,7 @@ export async function searchInPolygons () {
   const latLng = new window.google.maps.LatLng(lat, lng)
 
   for (const type of polygonTypes) {
-    const response = await fetch(`${window[Symbol.for('portal.api.host')]}/polygons/${type}`)
+    const response = await window.fetch(`https://portal.dgtek.net/polygons/${type}`)
 
     if (response.status !== 200) {
       emitEvent('server-error', {

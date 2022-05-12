@@ -5,7 +5,7 @@ import {
 
 import { containerStyle, linkStyle } from './styles'
 
-class PortalGoogleAutocomplete extends HTMLElement {
+class PortalGoogleAutocomplete extends window.HTMLElement {
   constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'closed' })

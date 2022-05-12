@@ -5,6 +5,7 @@ import { createAutocomplete } from './createAutocomplete'
 
 import { normalizeAddress } from './normalizeAddress'
 import { clearAddressData } from './clearAddressData'
+import { updateAddressDetails } from './updateAddressDetails'
 
 import { searchBuildingByAddress } from './searchBuildingByAddress'
 import { searchInPolygons } from './searchInPolygons'
@@ -17,6 +18,7 @@ export {
 
   clearAddressData,
   normalizeAddress,
+  updateAddressDetails,
 
   createInput,
 

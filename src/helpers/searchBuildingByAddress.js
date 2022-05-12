@@ -1,34 +1,40 @@
-import { emitEvent } from './'
+import { emitEvent, updateAddressDetails, searchInPolygons } from './'
 
 export async function searchBuildingByAddress () {
-  const response = await fetch(`${window[Symbol.for('portal.api.host')]}/building/search`, {
+  const host = window[Symbol.for('portal.api.host')]
+
+  const { address } = window[Symbol.for('global.addressData')]
+
+  const { data } = await (await window.fetch(`${host}/building/search`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ address: window[Symbol.for('global.addressData')].address })
-  })
+    body: JSON.stringify({ address })
+  })).json()
 
-  if (response.status !== 200) {
-    emitEvent('server-error', {
-      error: true,
-      errorType: 'Search address in DB',
-      errorMessage: 'Error reading the data from remote server'
-    })
-    return response.status
+  if (!data) {
+    await searchInPolygons()
+    emitEvent('submit-address', window[Symbol.for('global.addressData')])
+    return
   }
 
-  const result = await response.json()
+  if (!data.addressComponents.isSlave) {
+    updateAddressDetails(data)
+    return 200
+  }
 
-  if (!result.data) return 404
+  const { data: details } = await (await window.fetch(`${host}/building/${data.addressComponents.masterBuildingId}`)).json()
 
-  const { status, estimatedServiceDeliveryTime, _id: buildingId } = result.data
+  if (!details) {
+    emitEvent('open-error-popup', {
+      errorType: 'Slave building',
+      errorMessage: `Master building for ${address} not found`
+    })
+    return 404
+  }
 
-  Object.assign(window[Symbol.for('global.addressData')], {
-    status,
-    estimatedServiceDeliveryTime,
-    buildingId
-  })
+  updateAddressDetails(details)
 
   return 200
 }

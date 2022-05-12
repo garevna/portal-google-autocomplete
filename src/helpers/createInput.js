@@ -39,17 +39,17 @@ export function createInput (container) {
     onclick: async function (event) {
       if (!window[Symbol.for('global.addressData')].address || window[Symbol.for('global.addressData')].status === 'N/A') return
 
-      this.shadow.querySelector('#spinner').style.display = "inline-block"
-      this.shadow.querySelector('#google-maps-icon').style.display = "none"
-      window[Symbol.for('address-on-map-link')].style.display = "block"
+      this.shadow.querySelector('#spinner').style.display = 'inline-block'
+      this.shadow.querySelector('#google-maps-icon').style.display = 'none'
+      window[Symbol.for('address-on-map-link')].style.display = 'block'
 
-      let status = await searchBuildingByAddress(window[Symbol.for('global.addressData')].address)
+      let status = await searchBuildingByAddress()
 
       if (status !== 200) status = await searchInPolygons()
 
-      emitEvent ('new-address-data', window[Symbol.for('global.addressData')])
-      this.shadow.querySelector('#spinner').style.display = "none"
-      this.shadow.querySelector('#google-maps-icon').style.display = "inline-block"
+      emitEvent('new-address-data', window[Symbol.for('global.addressData')])
+      this.shadow.querySelector('#spinner').style.display = 'none'
+      this.shadow.querySelector('#google-maps-icon').style.display = 'inline-block'
     }.bind(this)
   })
 
